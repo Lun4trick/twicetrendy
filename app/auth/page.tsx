@@ -2,7 +2,7 @@
 import LoginForm from '@components/LoginForm'
 import RegistrationForm from '@components/RegistrationForm'
 import { useState } from 'react'
-import { AuthFormType } from '@app/utils/authForm'
+import { AuthFormType } from '@utils/authForm'
 
 const Auth = () => {
   const {

@@ -1,0 +1,15 @@
+export enum AuthFormType {
+  LOGIN,
+  REGISTRATION
+}
+
+export enum RegErrorType {
+  NONE,
+  EMAIL_EMPTY,
+  EMAIL_INVALID,
+  EMAIL_MISMATCH,
+  PASSWORD_EMPTY,
+  PASSWORD_INVALID,
+  PASSWORD_MISMATCH,
+  PASSWORD_SHORT
+}

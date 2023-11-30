@@ -1,6 +1,6 @@
 "use client"
 import Link from 'next/link';
-import { links } from '@app/utils/links';
+import { links } from '@utils/links';
 import cn from 'classnames';
 import { usePathname } from "next/navigation"
 

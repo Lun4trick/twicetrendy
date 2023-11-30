@@ -1,5 +1,5 @@
 import React from 'react'
-import { categories } from '@app/utils/categories'
+import { categories } from '@utils/categories'
 import Link from 'next/link'
 import Image from 'next/image'
 
