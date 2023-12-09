@@ -1,6 +1,21 @@
 import mongoose, { Schema, models } from 'mongoose';
 
 const userSchema = new Schema({
+  firstName: {
+    type: String,
+    default: ''
+  },
+
+  lastName: {
+    type: String,
+    default: ''
+  },
+
+  GdprAccepted: {
+    type: Boolean,
+    default: false
+  },
+
   verified: {
     type: Boolean,
     default: false
@@ -13,8 +28,8 @@ const userSchema = new Schema({
 
   email: {
     type: String,
-    required: true,
-    unique: true
+    required: [true, 'Email is required'],
+    unique: true,
   },
 
   phone: {

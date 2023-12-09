@@ -3,6 +3,7 @@ import { RegErrorType } from '@utils/authForm';
 import { RegData } from '@utils/regDataType';
 import cn from 'classnames';
 import { useEffect, useState } from 'react';
+import { connectMongoDB } from '@app/lib/mongodb';
 
 interface Props {
   onFormChange: () => void
@@ -30,6 +31,7 @@ const RegistrationForm: React.FC<Props> = ( {onFormChange} ) => {
       message: '',
     },
   });
+  const [userExist, setUserExist] = useState<boolean>(false);
 
   const [repeatError, setRepeatError] = useState<RegData>({
     email: {
@@ -55,6 +57,42 @@ const RegistrationForm: React.FC<Props> = ( {onFormChange} ) => {
         message: '',
       },
     });
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const regCheck = regFormCheck(email, password);
+    await connectMongoDB();
+
+        setUserExist(false);
+        if(regCheck.email.error || regCheck.password.error) {
+          setFormError(regFormCheck(email, password));
+        } else if (!repeatError.email.error && !repeatError.password.error) {
+          try {
+            const res = await fetch('api/register', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                email, password
+              })
+            });
+      
+            if (res.ok) {
+              setEmail('');
+              setEmailCheck('');
+              setPassword('');
+              setPasswordCheck('');
+            } else if (res.status === 401) {
+              setUserExist(true);
+            } else {
+              console.log(res.status, res.statusText);
+            }
+          } catch (error) {
+            console.log('something gone wrong during reg', error)
+          }
+    }
   }
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -108,39 +146,6 @@ const RegistrationForm: React.FC<Props> = ( {onFormChange} ) => {
     }
   }, [email, emailCheck]);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const regCheck = regFormCheck(email, password);
-
-    if(regCheck.email.error || regCheck.password.error) {
-      setFormError(regFormCheck(email, password));
-    } else if (!repeatError.email.error && !repeatError.password.error) {
-      try {
-        const res = await fetch('api/register', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            email, password
-          })
-        });
-  
-        if (res.ok) {
-          setEmail('');
-          setEmailCheck('');
-          setPassword('');
-          setPasswordCheck('');
-        } else {
-          console.log("reg failed")
-        }
-      } catch (error) {
-        console.log('something gone wrong during reg', error)
-      }
-    }
-  }
-
   return (
     <section>
       <form
@@ -151,6 +156,16 @@ const RegistrationForm: React.FC<Props> = ( {onFormChange} ) => {
         <h1 className='text-xl p-2 text-center border-b-2'>
           Regisztráció
         </h1>
+
+          <p className={cn(
+            'text-center flex justify-center items-center bg-red-300 text-sm md:text-lg transition-all rounded-lg duration-500 h-0 overflow-hidden',
+            {
+              'h-[35px] p-2': userExist
+            }
+          
+          )}>
+            E-mail használatban van!
+          </p>
 
         <div className='flex flex-col md:flex-row gap-2 justify-between'>
           <p className='text-center'>E-mail:</p>

@@ -1,6 +1,5 @@
 import { connectMongoDB } from '@app/lib/mongodb';
 import User from '@models/user';
-import { v4 } from 'uuid';
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
 import { sendEmail } from '@helpers/mailer';
@@ -10,23 +9,31 @@ export async function POST(req: Request) {
   try {
     const { email, password } = await req.json();
     const hashedPassword = await bcrypt.hash(password, 10);
-    const uuid = v4();
     await connectMongoDB();
-    const newUser = await User.create({
-      email, 
-      password: hashedPassword,
-    });
+    const isUserExist = await User.findOne({email});
 
-    await sendEmail(email, emailType.VERIFY, newUser._id);
-
+    if(isUserExist) {
+      return NextResponse.json(
+        {message: 'User already exist'}, 
+        {status: 401},
+        )
+    } else {
+      const newUser = await User.create({
+        email, 
+        password: hashedPassword,
+      });
+  
+      await sendEmail(email, emailType.VERIFY, newUser._id);
+  
+      return NextResponse.json(
+        {message: 'User registered'}, 
+        {status: 201},
+        )
+    }
+  } catch (error: any) {
     return NextResponse.json(
-      {message: 'User registered'}, 
-      {status: 201},
-      )
-  } catch (error) {
-    return NextResponse.json(
-      {message: 'error while registering user'},
-      { status: 500},
+      { message: error.message },
+      { status: error.status || 500},
     )
   }
 }

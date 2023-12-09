@@ -1,14 +1,7 @@
 import { OrderStatus } from '@utils/orderStatus';
 import mongoose, { Schema, models } from 'mongoose';
-import { v4 as uuid } from 'uuid';
 
 const orderSchema = new Schema({
-  id: {
-    type: String,
-    required: true,
-    unique: true,
-    default: uuid()
-  },
   products: {
     type: Array,
     required: true,
