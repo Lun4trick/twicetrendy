@@ -2,7 +2,6 @@ import { regFormCheck } from '@customFunctions/regFormCheck';
 import { RegErrorType } from '@utils/authForm';
 import { RegData } from '@utils/regDataType';
 import cn from 'classnames';
-import { set } from 'mongoose';
 import { useEffect, useState } from 'react';
 
 interface Props {

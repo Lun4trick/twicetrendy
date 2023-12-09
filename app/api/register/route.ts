@@ -3,6 +3,8 @@ import User from '@models/user';
 import { v4 } from 'uuid';
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
+import { sendEmail } from '@helpers/mailer';
+import { emailType } from '@utils/emailType';
 
 export async function POST(req: Request) {
   try {
@@ -10,15 +12,12 @@ export async function POST(req: Request) {
     const hashedPassword = await bcrypt.hash(password, 10);
     const uuid = v4();
     await connectMongoDB();
-    await User.create({
-      id: uuid, 
+    const newUser = await User.create({
       email, 
       password: hashedPassword,
-      city: '',
-      zipCode: '',
-      addressLine1: '',
-      mobileNumber: '',
     });
+
+    await sendEmail(email, emailType.VERIFY, newUser._id);
 
     return NextResponse.json(
       {message: 'User registered'}, 

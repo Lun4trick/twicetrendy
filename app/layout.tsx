@@ -1,6 +1,7 @@
 import Navbar from '@components/Navbar';
 import '@styles/globals.css'
 import React, { ReactNode } from 'react';
+import * as dotenv from 'dotenv';
 
 export const metadata = {
   title: 'Twice Trendy',
@@ -12,6 +13,7 @@ interface RootLayoutProps {
 }
 
 const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
+  dotenv.config();
   return (
     <html lang='hu'>
       <body>
