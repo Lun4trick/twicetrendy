@@ -4,7 +4,7 @@ import Image from 'next/image';
 const Personal = () => {
   return (
     <div className='flex gap-6 items-center justify-center'>
-      <Link href='/auth'>
+      <Link href='/user/auth'>
          <Image 
           src='/assets/images/user_icon.svg' 
           alt='user_icon' 

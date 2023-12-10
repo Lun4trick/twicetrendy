@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
 import { sendEmail } from '@helpers/mailer';
 import { emailType } from '@utils/emailType';
+import { redirect } from 'next/navigation';
 
 export async function POST(req: Request) {
   try {
@@ -15,7 +16,7 @@ export async function POST(req: Request) {
     if(isUserExist) {
       return NextResponse.json(
         {message: 'User already exist'}, 
-        {status: 401},
+        {status: 409},
         )
     } else {
       const newUser = await User.create({

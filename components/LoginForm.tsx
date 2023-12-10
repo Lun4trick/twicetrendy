@@ -19,19 +19,19 @@ const LoginForm: React.FC<Props> = ( {onFormChange} ) => {
           Bejelentkezés
         </h1>
         <div className='flex flex-col md:flex-row gap-2 justify-between'>
-          <p className='text-center'>E-mail:</p>
+          <p className='flex text-center items-center'>E-mail:</p>
           <input 
             type="email" 
-            className='border-2 px-1'
+            className='border-2 p-1 rounded-md'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className='flex justify-between flex-col md:flex-row'>
-          <p className='text-center'>Jelszó:</p>
+          <p className='flex text-center items-center'>Jelszó:</p>
           <input 
             type="password" 
-            className='border-2 px-1'
+            className='border-2 p-1 rounded-md'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />

@@ -49,7 +49,7 @@ export const sendEmail = async (
                 <h1>Köszönjük a regisztrációt!</h1>
                 <p>Örömmel értesítjük, hogy sikeresen regisztrált a Twice Trendy webáruházban.</p>
                 <p>A regisztráció visszaigazolásához kattintson a következő linkre:</p>
-                <a href="http://${process.env.DOMAIN}/verifyemail?token=${hashedToken}">Regisztráció visszaigazolása</a>
+                <a href="http://${process.env.DOMAIN}/user/register/verifyemail?token=${hashedToken}">Regisztráció visszaigazolása</a>
             </div>
         </body>
       `,

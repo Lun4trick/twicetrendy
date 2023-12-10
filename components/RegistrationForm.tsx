@@ -4,6 +4,7 @@ import { RegData } from '@utils/regDataType';
 import cn from 'classnames';
 import { useEffect, useState } from 'react';
 import { connectMongoDB } from '@app/lib/mongodb';
+import { useRouter } from 'next/navigation'
 
 interface Props {
   onFormChange: () => void
@@ -47,6 +48,7 @@ const RegistrationForm: React.FC<Props> = ( {onFormChange} ) => {
   const [password, setPassword] = useState('');
   const [emailCheck, setEmailCheck] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
+  const router = useRouter();
   
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -69,7 +71,7 @@ const RegistrationForm: React.FC<Props> = ( {onFormChange} ) => {
           setFormError(regFormCheck(email, password));
         } else if (!repeatError.email.error && !repeatError.password.error) {
           try {
-            const res = await fetch('api/register', {
+            const res = await fetch('/api/register', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
@@ -84,7 +86,8 @@ const RegistrationForm: React.FC<Props> = ( {onFormChange} ) => {
               setEmailCheck('');
               setPassword('');
               setPasswordCheck('');
-            } else if (res.status === 401) {
+              router.push('/user/register/success');
+            } else if (res.status === 409) {
               setUserExist(true);
             } else {
               console.log(res.status, res.statusText);
@@ -147,32 +150,31 @@ const RegistrationForm: React.FC<Props> = ( {onFormChange} ) => {
   }, [email, emailCheck]);
 
   return (
-    <section>
+    <section className='relative'>
+          <p className={cn(
+            'text-center mt-6 relative flex justify-center items-center bg-red-300 text-sm md:text-lg transition-all rounded-lg duration-500 h-0 overflow-hidden',
+            {
+              'h-[35px] p-2': userExist
+            }
+          
+          )}>
+            Ez az E-mail cím már használatban van!
+          </p>
       <form
         onSubmit={handleSubmit}
-        className='flex flex-col gap-3 p-5'
+        className='flex max-w-fit border-b-2 mx-auto flex-col gap-3 p-5'
         method='POST'
       >
         <h1 className='text-xl p-2 text-center border-b-2'>
           Regisztráció
         </h1>
 
-          <p className={cn(
-            'text-center flex justify-center items-center bg-red-300 text-sm md:text-lg transition-all rounded-lg duration-500 h-0 overflow-hidden',
-            {
-              'h-[35px] p-2': userExist
-            }
-          
-          )}>
-            E-mail használatban van!
-          </p>
-
-        <div className='flex flex-col md:flex-row gap-2 justify-between'>
+        <div className='flex flex-col md:flex-row gap-2 justify-between items-center'>
           <p className='text-center'>E-mail:</p>
           <div className='flex flex-col'>
             <input 
               type="text" 
-              className='border-2 px-1'
+              className='border-2 p-1 rounded-md'
               value={email}
               onChange={handleEmailChange}
             />
@@ -187,12 +189,12 @@ const RegistrationForm: React.FC<Props> = ( {onFormChange} ) => {
           </div>
         </div>
 
-        <div className='flex flex-col md:flex-row gap-2 justify-between'>
+        <div className='flex flex-col md:flex-row gap-2 justify-between items-center'>
           <p className='text-center'>E-mail megerősítés:</p>
           <div className='flex flex-col'>
             <input 
               type="text" 
-              className='border-2 px-1'
+              className='border-2 p-1 rounded-md'
               value={emailCheck}
               onChange={(e) => {setEmailCheck(e.target.value)}}
             />
@@ -207,12 +209,12 @@ const RegistrationForm: React.FC<Props> = ( {onFormChange} ) => {
           </div>
         </div>
 
-        <div className='flex flex-col md:flex-row justify-between'>
+        <div className='flex flex-col md:flex-row justify-between items-center'>
           <p className='text-center'>Jelszó:</p>
           <div className='flex flex-col'>
             <input 
               type="password" 
-              className='border-2 px-1'
+              className='border-2 p-1 rounded-md'
               value={password}
               onChange={handlePasswordChange}
             />
@@ -227,12 +229,12 @@ const RegistrationForm: React.FC<Props> = ( {onFormChange} ) => {
           </div>
         </div>
 
-        <div className='flex flex-col md:flex-row justify-between'>
+        <div className='flex flex-col md:flex-row justify-between items-center'>
           <p className='text-center'>Jelszó megerősítés:</p>
           <div>
             <input 
               type="password" 
-              className='border-2 px-1'
+              className='border-2 p-1 rounded-md'
               value={passwordCheck}
               onChange={(e) => {setPasswordCheck(e.target.value)}}
             />
