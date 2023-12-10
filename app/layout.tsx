@@ -1,7 +1,7 @@
-import Navbar from '@components/Navbar';
 import '@styles/globals.css'
 import React, { ReactNode } from 'react';
 import * as dotenv from 'dotenv';
+import ClientLayout from './clientLayout';
 
 export const metadata = {
   title: 'Twice Trendy',
@@ -14,21 +14,7 @@ interface RootLayoutProps {
 
 const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   dotenv.config();
-  return (
-    <html lang='hu'>
-      <body>
-        <div className='main'>
-          <div className='gradient'/>
-        </div>
-
-        <main className='app font-poppins'>
-          <Navbar/>
-          {children}
-        </main>
-      </body>
-
-    </html>
-  )
+  return <ClientLayout>{children}</ClientLayout>
 }
 
 export default RootLayout

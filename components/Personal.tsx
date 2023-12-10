@@ -1,12 +1,15 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { useSession } from 'next-auth/react';
 
 const Personal = () => {
+  const { data: session, status } = useSession()
+  const user = session?.user
   return (
     <div className='flex gap-6 items-center justify-center'>
       <Link href='/user/auth'>
          <Image 
-          src='/assets/images/user_icon.svg' 
+          src={user ? '/assets/images/user_icon.svg' : '/assets/images/login.svg'}
           alt='user_icon' 
           width={32} 
           height={32}
