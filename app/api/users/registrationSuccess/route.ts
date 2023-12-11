@@ -10,8 +10,7 @@ export async function POST(req: NextRequest) {
 
    const user = await User.findOne(
       { 
-        verifyToken: token, 
-        verifyTokenExpiration: {$gt: Date.now()} 
+        newRegToken: token,
       }
     )
 
@@ -22,18 +21,20 @@ export async function POST(req: NextRequest) {
         )
     }
 
-    user.verified = true;
-    user.verifyToken = undefined;
-    user.verifyTokenExpiration = undefined;
-    await user.save();
+    console.log(user)
 
+    setTimeout(async () => {
+      user.newRegToken = undefined;
+      user.newRegTokenExpiration = undefined;
+      await user.save();
+    }, 30000)
     return NextResponse.json(
-      {message: 'Email verified'}, 
+      {message: 'Reg completed'}, 
       {status: 201},
     );
   } catch (error) {
     return NextResponse.json(
-      {message: 'error while verifying email'},
+      {message: 'Something went wrong'},
       { status: 500},
     )
   }

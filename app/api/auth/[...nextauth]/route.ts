@@ -22,9 +22,10 @@ const handler = NextAuth({
           const isPasswordCorrect = await compare(credentials?.password || '', user.password);
 
           if(isPasswordCorrect) {
-            console.log(user.email);
             return {
-              email: user.email
+              email: user.email,
+              cart: user.cart,
+              total: user.total,
             } as any;
           } else {
             throw new Error( JSON.stringify({ message: 'Hibás jelszó!', status: 401 }))

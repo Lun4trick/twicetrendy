@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { useLoginError } from '@customhooks/useLoginError'
 import cn from 'classnames'
-import { redirect, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 interface Props {
   onFormChange: () => void

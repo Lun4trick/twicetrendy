@@ -100,6 +100,16 @@ const userSchema = new Schema({
     type: Date,
     default: undefined
   },
+
+  newRegToken: {
+    type: String,
+    default: undefined
+  },
+
+  newRegTokenExpiration: {
+    type: Date,
+    default: undefined
+  },
 },
   {
     timestamps: true

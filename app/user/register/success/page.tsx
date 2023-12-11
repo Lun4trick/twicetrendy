@@ -1,26 +1,66 @@
-import Image from 'next/image';
+'use client'
+
+import RegFailed from '@components/RegFailed';
+import RegSuccess from '@components/RegSuccess';
+import { useSession } from 'next-auth/react';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const RegistrationComplete = () => {
-  return (
-    <section className='flex mt-8 flex-col w-full justify-center items-center'>
-      <h1 className='text-2xl md:text-4xl'>
-        Sikeres regisztráció!
-        </h1>
-      <p className='text-sm md:text-lg text-center mt-4'>
-        Nincs más teendőd, mint visszaigazolni az e-mail címed, azzal a linkel amit az email címedre küldtünk.
-      </p>
-      <p className='text-center text-xs mt-2'>
-        Ha nem találod az e-mailt, akkor ellenőrizd a spam mappádat is.
-      </p>
-      <Image
-        className='mt-4 md:mt-8'
-        src="/assets/images/green_check_mark.svg" 
-        alt="zöld_pipa" 
-        height={120}
-        width={120}
-      />
-    </section>
-  )
-};
+  const router = useRouter();
+  const { data: session, status } = useSession();
+  const [token, setToken] = useState<string | null>('');
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isTokenValid, setIsTokenValid] = useState<boolean>(false);
+
+  const checkToken = async() => {
+    try {
+      const res = await axios.post('/api/users/registrationSuccess', { token });
+      console.log(res)
+      if (res.status === 201) {
+        setIsTokenValid(true);
+      } else {
+        setIsTokenValid(false);
+      }
+
+    } catch (error: any) {
+      console.log(error.response.data);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    const urlToken = window.location.href.split('=')[1];
+    setToken(urlToken);
+    checkToken();
+  }, []);
+
+  useEffect(() => {
+    if(token) {
+      checkToken()
+    };
+  }, [token]);
+
+  useEffect(() => {
+    console.log(session?.user, status)
+  }, [session])
+
+      return (
+        <div>
+          {
+            isLoading
+              ? <h1 className=' w-full h-20 text-8xl animate-bounce mt-5'>...</h1>
+              : <div>
+                  {
+                  isTokenValid
+                    ? <RegSuccess />
+                    : <RegFailed />
+                  }
+                </div>}
+          </div>
+      )
+    }
 
 export default RegistrationComplete;

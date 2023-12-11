@@ -4,6 +4,7 @@ import cn from 'classnames'
 import Menu from './Menu';
 import Personal from './Personal';
 import { useState } from 'react';
+import Image from 'next/image';
 import MobileMenu from './MobileMenu';
 
 const Navbar = () => {
@@ -16,7 +17,13 @@ const Navbar = () => {
           href="/"
           className='flex font-mont font-bold text-lg md:text-2xl'
         >
-          Twice Trendy
+          <Image
+          className='max-w-[80px] md:max-w-[120px]'
+            src='/assets/images/logo.svg'
+            alt='logo'
+            width={120}
+            height={50}
+          />
         </Link>
         <Menu/>
         <button 

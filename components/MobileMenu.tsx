@@ -2,7 +2,6 @@
 import Link from 'next/link'
 import { links } from '@utils/links'
 import cn from 'classnames'
-import {useState} from 'react'
 import { usePathname } from 'next/navigation';
 import Personal from './Personal';
 

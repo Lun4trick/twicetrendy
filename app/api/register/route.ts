@@ -4,7 +4,6 @@ import { NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
 import { sendEmail } from '@helpers/mailer';
 import { emailType } from '@utils/emailType';
-import { redirect } from 'next/navigation';
 
 export async function POST(req: Request) {
   try {
@@ -23,13 +22,21 @@ export async function POST(req: Request) {
         email, 
         password: hashedPassword,
       });
+
+      const newRegToken = await bcrypt.hash(newUser._id.toString(), 10);
+
+      await User.findByIdAndUpdate(newUser._id, {
+        newRegToken: newRegToken,
+        newRegTokenExpiration: Date.now() + 300000,
+      })
   
       await sendEmail(email, emailType.VERIFY, newUser._id);
+      console.log(newUser)
   
       return NextResponse.json(
-        {message: 'User registered'}, 
-        {status: 201},
-        )
+        {data: `/user/register/success?=${newRegToken}`},
+        {status: 200},
+      )
     }
   } catch (error: any) {
     return NextResponse.json(

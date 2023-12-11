@@ -3,7 +3,6 @@ import { RegErrorType } from '@utils/authForm';
 import { RegData } from '@utils/regDataType';
 import cn from 'classnames';
 import { useEffect, useState } from 'react';
-import { connectMongoDB } from '@app/lib/mongodb';
 import { useRouter } from 'next/navigation'
 
 interface Props {
@@ -12,13 +11,8 @@ interface Props {
 
 const {
   NONE,
-  EMAIL_EMPTY,
-  EMAIL_INVALID,
   EMAIL_MISMATCH,
-  PASSWORD_EMPTY,
-  PASSWORD_INVALID,
   PASSWORD_MISMATCH,
-  PASSWORD_SHORT
 } = RegErrorType;
 
 const RegistrationForm: React.FC<Props> = ( {onFormChange} ) => {
@@ -64,14 +58,12 @@ const RegistrationForm: React.FC<Props> = ( {onFormChange} ) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const regCheck = regFormCheck(email, password);
-    await connectMongoDB();
-
         setUserExist(false);
         if(regCheck.email.error || regCheck.password.error) {
           setFormError(regFormCheck(email, password));
         } else if (!repeatError.email.error && !repeatError.password.error) {
           try {
-            const res = await fetch('/api/register', {
+            const res = await fetch('/api/register/', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
@@ -80,13 +72,18 @@ const RegistrationForm: React.FC<Props> = ( {onFormChange} ) => {
                 email, password
               })
             });
+
+            const resBody = await res.json();
+
+            console.log(res)
       
             if (res.ok) {
               setEmail('');
               setEmailCheck('');
               setPassword('');
               setPasswordCheck('');
-              router.push('/user/register/success');
+              router.push(resBody.data)
+              console.log(resBody)
             } else if (res.status === 409) {
               setUserExist(true);
             } else {
