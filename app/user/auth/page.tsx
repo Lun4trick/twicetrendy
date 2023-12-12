@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { AuthFormType } from '@utils/authForm'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import Loader from '@components/Loader'
 
 const Auth = () => {
   const {
@@ -28,15 +29,13 @@ const Auth = () => {
       router.push('/')
     }
     console.log(session?.user, status)
-  }, [])
+  }, [status])
 
 
     return (
       <>
       {status !== 'unauthenticated' ? (
-        <div>
-          <h1 className=' w-full h-20 text-8xl animate-bounce mt-5'>...</h1>
-        </div>
+        <Loader />
       ) : (
         <section className='flex w-full justify-evenly'>
           {

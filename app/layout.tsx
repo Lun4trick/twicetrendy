@@ -15,9 +15,9 @@ interface RootLayoutProps {
   session: any;
 }
 
-const RootLayout: React.FC<RootLayoutProps> = ({ children, session }) => {
+const RootLayout: React.FC<RootLayoutProps> = async ({ children }) => {
   dotenv.config();
-  // const session = getServerSession();
+  const session = await getServerSession();
   return (
     <html lang='hu'>
       <Provider session={session}>

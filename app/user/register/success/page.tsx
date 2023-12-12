@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import Loader from '@components/Loader';
 
 const RegistrationComplete = () => {
   const router = useRouter();
@@ -27,7 +28,11 @@ const RegistrationComplete = () => {
     } catch (error: any) {
       console.log(error.response.data);
     } finally {
-      setIsLoading(false);
+      if (status === 'authenticated') {
+        router.push('/')
+      } else {
+        setIsLoading(false);
+      }
     }
   }
 
@@ -51,7 +56,7 @@ const RegistrationComplete = () => {
         <div>
           {
             isLoading
-              ? <h1 className=' w-full h-20 text-8xl animate-bounce mt-5'>...</h1>
+              ? <Loader />
               : <div>
                   {
                   isTokenValid
