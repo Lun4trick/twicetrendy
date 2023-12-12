@@ -12,7 +12,6 @@ export const metadata = {
 
 interface RootLayoutProps {
   children: ReactNode;
-  session: any;
 }
 
 const RootLayout: React.FC<RootLayoutProps> = async ({ children }) => {
