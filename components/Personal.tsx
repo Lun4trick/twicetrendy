@@ -35,7 +35,7 @@ const Personal = ({userMenuHandler}: PersonalProps) => {
               alt='user_icon' 
               width={32} 
               height={32}
-              className='rounded-full hover:scale-125 transition-transform duration-200 min-w-[24px]'
+              className='rounded-full fill-slate-300 hover:scale-125 transition-transform duration-200 min-w-[24px]'
             />
           </Link>
           )}

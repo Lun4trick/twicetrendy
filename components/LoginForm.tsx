@@ -35,12 +35,13 @@ const LoginForm: React.FC<Props> = ( {onFormChange} ) => {
   }
 
   return (
-    <div>
+    <section>
       <form 
         action="#"
         method='POST' 
         className='flex flex-col gap-3 border-b-2 p-5'
         onSubmit={handleSubmit}
+        autoComplete='on'
       >
         <h1 className='text-xl p-2 text-center border-b-2'>
           Bejelentkezés
@@ -51,6 +52,7 @@ const LoginForm: React.FC<Props> = ( {onFormChange} ) => {
             <input 
               type="email" 
               className='border-2 p-1 rounded-md'
+              autoComplete='email'
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
@@ -104,7 +106,7 @@ const LoginForm: React.FC<Props> = ( {onFormChange} ) => {
           Regisztráció
         </button>
       </section>
-    </div>
+    </section>
   )
 }
 

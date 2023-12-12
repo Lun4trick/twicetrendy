@@ -16,7 +16,7 @@ function ProfileMenu({ isProfileMenuOpen, profileMenuHandler }: Props) {
       isProfileMenuOpen ? 'opacity-80' : 'opacity-0 pointer-events-none'
     )}/>
     <div className={cn(
-      'fixed p-2 top-0 end-0 transition-all rounded-l-xl duration-700 transform h-full max-w-xs z-[60] bg-white border-s overflow-hidden',
+      'fixed p-2 top-0 end-0 transition-all rounded-l-xl duration-1000 transform h-full max-w-xs z-[60] bg-white border-s overflow-hidden',
       isProfileMenuOpen ? 'translate-x-0 w-full' : 'translate-x-full w-0'
         )}
         >
@@ -46,7 +46,7 @@ function ProfileMenu({ isProfileMenuOpen, profileMenuHandler }: Props) {
           <div className='flex flex-col w-full h-full items-center gap-4 overflow-hidden'>
             {profileLinks.map((link) => (
               <Link
-                className='text-lg font-semibold p-2 border-[1px]  rounded-full hover:bg-gray-100 border-gray-400 text-gray-600 disabled:opacity-50 disabled:pointer-events-none transition-all duration-300'
+                className='flex text-lg font-semibold p-2 border-[1px]  rounded-full hover:bg-gray-100 border-gray-400 text-gray-600 disabled:opacity-50 disabled:pointer-events-none transition-all duration-300 w-full min-w-[200px]'
                 key={link.path} 
                 href={link.path}
               >

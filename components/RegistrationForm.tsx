@@ -159,6 +159,7 @@ const RegistrationForm: React.FC<Props> = ( {onFormChange} ) => {
           </p>
       <form
         onSubmit={handleSubmit}
+        autoComplete='on'
         className='flex max-w-fit border-b-2 mx-auto flex-col gap-3 p-5'
         method='POST'
       >
@@ -170,9 +171,10 @@ const RegistrationForm: React.FC<Props> = ( {onFormChange} ) => {
           <p className='text-center'>E-mail:</p>
           <div className='flex flex-col'>
             <input 
-              type="text" 
+              type="email" 
               className='border-2 p-1 rounded-md'
               value={email}
+              autoComplete='email'
               onChange={handleEmailChange}
             />
             <span className={cn(
@@ -190,7 +192,7 @@ const RegistrationForm: React.FC<Props> = ( {onFormChange} ) => {
           <p className='text-center'>E-mail megerősítés:</p>
           <div className='flex flex-col'>
             <input 
-              type="text" 
+              type="email" 
               className='border-2 p-1 rounded-md'
               value={emailCheck}
               onChange={(e) => {setEmailCheck(e.target.value)}}
