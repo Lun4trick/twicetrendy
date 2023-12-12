@@ -11,11 +11,6 @@ const userSchema = new Schema({
     default: ''
   },
 
-  GdprAccepted: {
-    type: Boolean,
-    default: false
-  },
-
   verified: {
     type: Boolean,
     default: false
@@ -41,6 +36,62 @@ const userSchema = new Schema({
     type: String,
     required: [true, 'Password is required'],
   },
+
+  consents: {
+      terms: {
+        type: Boolean,
+        default: false,
+        acceptedAt: {
+          type: Date,
+          default: undefined
+        },
+      },
+
+      marketingEmails: {
+        type: Boolean,
+        default: false,
+        acceptedAt: {
+          type: Date,
+          default: undefined
+        },
+      },
+
+      gdpr: {
+        type: Boolean,
+        default: false,
+        acceptedAt: {
+          type: Date,
+          default: undefined
+        },
+      },
+
+      marketingCookies: {
+        type: Boolean,
+        default: false,
+        acceptedAt: {
+          type: Date,
+          default: undefined
+        },
+      },
+
+      esentialCookies: {
+        type: Boolean,
+        default: false,
+        acceptedAt: {
+          type: Date,
+          default: undefined
+        },
+      },
+
+      analyticsCookies: {
+        type: Boolean,
+        default: false,
+        acceptedAt: {
+          type: Date,
+          default: undefined
+        },
+      },
+    },
 
   address: {
     city: {

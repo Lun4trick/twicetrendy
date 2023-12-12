@@ -2,7 +2,6 @@ import NextAuth from 'next-auth/next';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import {compare} from 'bcrypt';
 import User from '@models/user';
-import { NextResponse } from 'next/server';
 import { connectMongoDB } from '@app/lib/mongodb';
 
 const handler = NextAuth({
@@ -35,7 +34,7 @@ const handler = NextAuth({
         }
       }
     })
-  ]
+  ],
 });
 
 export { handler as POST, handler as GET};

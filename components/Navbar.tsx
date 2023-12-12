@@ -6,9 +6,14 @@ import Personal from './Personal';
 import { useState } from 'react';
 import Image from 'next/image';
 import MobileMenu from './MobileMenu';
+import ProfileMenu from './ProfileMenu';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false)
+  const profileMenuHandler = () => {
+    setIsProfileMenuOpen((prev) => !prev)
+  }
 
   return (
     <div className='w-full'>
@@ -37,10 +42,14 @@ const Navbar = () => {
         >
           {isMenuOpen ? 'X' : 'Menu'}
         </button>
-        <div className='hidden md:flex'>
-          <Personal/>
+        <div className='flex'>
+          <Personal userMenuHandler={profileMenuHandler}/>
         </div>
       </div>
+      <ProfileMenu 
+        isProfileMenuOpen={isProfileMenuOpen}
+        profileMenuHandler={profileMenuHandler}
+      />
       <MobileMenu isMenuOpen={isMenuOpen}/>
     </div>
   )

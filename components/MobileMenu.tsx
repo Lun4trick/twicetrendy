@@ -31,7 +31,6 @@ const MobileMenu: React.FC<Props> = ({ isMenuOpen }) => {
           </Link>)
         }
       </div>
-      <Personal/>
     </div>
   )
 }
