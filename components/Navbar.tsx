@@ -19,7 +19,7 @@ const Navbar = () => {
         >
           <Image
           className='max-w-[80px] md:max-w-[120px]'
-            src='/assets/images/logo.svg'
+            src='/assets/images/Logo.svg'
             alt='logo'
             width={120}
             height={50}
