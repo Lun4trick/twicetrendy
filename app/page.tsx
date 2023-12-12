@@ -1,3 +1,4 @@
+"use client"
 import Adbar from '@components/AdBar'
 import CategoryContainer from '@components/CategoryContainer'
 
