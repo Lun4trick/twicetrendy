@@ -1,12 +1,13 @@
 'use client'
 import { SessionProvider } from 'next-auth/react'
+import router from 'next/router'
 
 type ProviderProps = {
   children: React.ReactNode
   session: any
 }
 
-import React from 'react'
+import React, { useEffect } from 'react'
 
 function Provider({ children, session }: ProviderProps) {
   return (
