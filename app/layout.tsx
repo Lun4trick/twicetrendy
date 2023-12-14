@@ -19,6 +19,11 @@ const RootLayout: React.FC<RootLayoutProps> = async ({ children }) => {
   const session = await getServerSession();
   return (
     <html lang='hu'>
+      <head>
+      <meta 
+        name="facebook-domain-verification" content="icv5kpp51wffbot25tahg7epnrf0fq" 
+      />
+      </head>
       <Provider session={session}>
         <body>
           <div className='main'>

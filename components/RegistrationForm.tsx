@@ -96,7 +96,6 @@ const RegistrationForm: React.FC<Props> = ( {onFormChange} ) => {
               setPassword('');
               setPasswordCheck('');
               router.push(resBody.data)
-              console.log(resBody)
             } else if (res.status === 409) {
               setUserExist(true);
             } else {

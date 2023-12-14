@@ -1,18 +1,18 @@
 const profileLinks = [
   {
-    path: 'user/profile/details',
+    path: '/user/profile?=profileDetails',
     name: 'Fiók adatok',
   },
   {
-    path: 'user/profile/addresses',
+    path: '/user/profile/addresses',
     name: 'Címek',
   },
   {
-    path: 'user/profile/orders',
+    path: '/user/profile/orders',
     name: 'Megrendelések',
   },
   {
-    path: 'user/profile/changePassword',
+    path: '/user/profile/changePassword',
     name: 'Jelszó módosítás',
   },
 ];

@@ -62,6 +62,7 @@ function ProfileMenu({ isProfileMenuOpen, profileMenuHandler }: Props) {
           <div className='flex mt-8 flex-col w-full h-full items-center gap-4 overflow-hidden'>
             {profileLinks.map((link) => (
               <Link
+                onClick={() => profileMenuHandler()}
                 className='flex text-lg font-semibold p-2 border-[1px]  rounded-full hover:bg-gray-100 border-gray-400 text-gray-600 disabled:opacity-50 disabled:pointer-events-none transition-all duration-300 w-full min-w-[300px]'
                 key={link.path} 
                 href={link.path}
