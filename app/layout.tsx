@@ -21,7 +21,7 @@ const RootLayout: React.FC<RootLayoutProps> = async ({ children }) => {
     <html lang='hu'>
       <head>
       <meta 
-        name="facebook-domain-verification" content="icv5kpp51wffbot25tahg7epnrf0fq" 
+        name="facebook-domain-verification" content={process.env.FACEBOOK_AUTH}
       />
       </head>
       <Provider session={session}>
