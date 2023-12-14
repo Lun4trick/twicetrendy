@@ -1,7 +1,8 @@
 import cn from 'classnames'
 import profileLinks from '@utils/profileLinks'
 import Link from 'next/link';
-import { signOut } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
+import Image from 'next/image';
 
 type Props = {
   isProfileMenuOpen: boolean;
@@ -9,6 +10,8 @@ type Props = {
 }
 
 function ProfileMenu({ isProfileMenuOpen, profileMenuHandler }: Props) {
+  const {data: session} = useSession();
+
   return (
     <>
     <div className={cn(
@@ -43,10 +46,23 @@ function ProfileMenu({ isProfileMenuOpen, profileMenuHandler }: Props) {
             </svg>
 
           </button>
-          <div className='flex flex-col w-full h-full items-center gap-4 overflow-hidden'>
+          <div className='min-w-[300px]'>
+            <Image
+            className='flex max-w-[150px] md:max-w-[200px] mx-auto'
+              src='/assets/images/Logo.svg'
+              alt='logo'
+              width={200}
+              height={200}
+            />
+          </div>
+          <div className='flex gap-2 flex-col justify-center items-center min-w-[300px] mt-8'>
+            <p className='text-2xl'>Üdvözlünk</p>
+            <p className='text-xl'>{session?.user.firstName}</p>
+          </div>
+          <div className='flex mt-8 flex-col w-full h-full items-center gap-4 overflow-hidden'>
             {profileLinks.map((link) => (
               <Link
-                className='flex text-lg font-semibold p-2 border-[1px]  rounded-full hover:bg-gray-100 border-gray-400 text-gray-600 disabled:opacity-50 disabled:pointer-events-none transition-all duration-300 w-full min-w-[200px]'
+                className='flex text-lg font-semibold p-2 border-[1px]  rounded-full hover:bg-gray-100 border-gray-400 text-gray-600 disabled:opacity-50 disabled:pointer-events-none transition-all duration-300 w-full min-w-[300px]'
                 key={link.path} 
                 href={link.path}
               >
@@ -54,7 +70,7 @@ function ProfileMenu({ isProfileMenuOpen, profileMenuHandler }: Props) {
               </Link>
             ))}
             <button 
-              className='text-lg font-semibold p-2 border-[1px]  rounded-full hover:bg-red-100 border-red-400 text-gray-600 disabled:opacity-50 disabled:pointer-events-none transition-all duration-300'
+              className='flex text-lg font-semibold p-2 border-[1px]  rounded-full hover:bg-red-100 border-red-400 text-gray-600 disabled:opacity-50 disabled:pointer-events-none transition-all duration-300 min-w-[300px]'
               onClick={() => signOut()}
             >
               Kijelentkezés

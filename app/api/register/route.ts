@@ -7,7 +7,14 @@ import { emailType } from '@utils/emailType';
 
 export async function POST(req: Request) {
   try {
-    const { email, password } = await req.json();
+    const { 
+      firstName, 
+      lastName, 
+      email, 
+      password,
+      gdprAszfAccepted,
+      marketingEmailAccepted,
+     } = await req.json();
     const hashedPassword = await bcrypt.hash(password, 10);
     await connectMongoDB();
     const isUserExist = await User.findOne({email});
@@ -19,8 +26,36 @@ export async function POST(req: Request) {
         )
     } else {
       const newUser = await User.create({
+        firstName,
+        lastName,
         email, 
         password: hashedPassword,
+        consents: {
+          terms: {
+            accepted: gdprAszfAccepted,
+            updatedAt: Date.now(),
+          },
+          gdpr: {
+            accepted: gdprAszfAccepted,
+            updatedAt: Date.now(),
+          },
+          esentialCookies: {
+            accepted: gdprAszfAccepted,
+            updatedAt: Date.now(),
+          },
+          marketingCookies: {
+            accepted: marketingEmailAccepted,
+            updatedAt: Date.now(),
+          },
+          marketingEmails: {
+            accepted: marketingEmailAccepted,
+            updatedAt:  Date.now(),
+          },
+          analyticsCookies: {
+            accepted: marketingEmailAccepted,
+            updatedAt: Date.now(),
+          },
+        },
       });
 
       const newRegToken = await bcrypt.hash(newUser._id.toString(), 10);

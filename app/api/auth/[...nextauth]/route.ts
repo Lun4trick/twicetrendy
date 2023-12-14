@@ -8,6 +8,33 @@ const handler = NextAuth({
   session: {
     strategy: 'jwt',
   },
+
+  callbacks:{
+    async jwt({token, user}: {token: any, user: any}) {
+      if(user) {
+        token.firstName = user.firstName;
+        token.lastName = user.lastName;
+        token.phone = user.phone;
+        token.email = user.email;
+        token.verified = user.verified;
+      }
+
+      return token;
+    },
+    
+    async session({ session, token}) {
+      session.user = {
+        firstName: token.firstName as string,
+        lastName: token.lastName as string,
+        phone: token.phone as number,
+        email: token.email as string,
+        verified: token.verified as boolean,
+      }
+      
+      return session
+    }
+  },
+
   providers: [
     CredentialsProvider({
       credentials: {
@@ -21,11 +48,7 @@ const handler = NextAuth({
           const isPasswordCorrect = await compare(credentials?.password || '', user.password);
 
           if(isPasswordCorrect) {
-            return {
-              email: user.email,
-              cart: user.cart,
-              total: user.total,
-            } as any;
+            return user as any;
           } else {
             throw new Error( JSON.stringify({ message: 'Hibás jelszó!', status: 401 }))
           }

@@ -38,11 +38,26 @@ const RegistrationForm: React.FC<Props> = ( {onFormChange} ) => {
       message: '',
     },
   });
+  const [firstName, setFirstName] = useState<string>('');
+  const [lastName, setLastName] = useState<string>('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailCheck, setEmailCheck] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
+  const [gdprAszfAccepted, setGdprAszfAccepted] = useState(false);
+  const [
+    marketingEmailAccepted, 
+    setMarketingEmailAccepted
+  ] = useState(false);
   const router = useRouter();
+
+  const handleGdprCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setGdprAszfAccepted(e.target.checked);
+  }
+
+  const handleMarketingCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMarketingEmailAccepted(e.target.checked);
+  }
   
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -69,13 +84,11 @@ const RegistrationForm: React.FC<Props> = ( {onFormChange} ) => {
                 'Content-Type': 'application/json'
               },
               body: JSON.stringify({
-                email, password
+                firstName, lastName, email, password, gdprAszfAccepted, marketingEmailAccepted
               })
             });
 
             const resBody = await res.json();
-
-            console.log(res)
       
             if (res.ok) {
               setEmail('');
@@ -168,6 +181,32 @@ const RegistrationForm: React.FC<Props> = ( {onFormChange} ) => {
         </h1>
 
         <div className='flex flex-col md:flex-row gap-2 justify-between items-center'>
+          <p className='text-center'>Vezetéknév:</p>
+          <div className='flex flex-col'>
+            <input 
+              type="text" 
+              className='border-2 p-1 rounded-md'
+              value={lastName}
+              autoComplete='family-name'
+              onChange={(e) => {setFirstName(e.target.value)}}
+            />
+          </div>
+        </div>
+
+        <div className='flex flex-col md:flex-row gap-2 justify-between items-center'>
+          <p className='text-center'>Keresztnév:</p>
+            <div className='flex flex-col'>
+              <input 
+                type="text" 
+                className='border-2 p-1 rounded-md'
+                value={firstName}
+                autoComplete='given-name'
+                onChange={(e) => {setLastName(e.target.value)}}
+              />
+            </div>
+          </div>
+
+        <div className='flex flex-col md:flex-row gap-2 justify-between items-center'>
           <p className='text-center'>E-mail:</p>
           <div className='flex flex-col'>
             <input 
@@ -247,9 +286,23 @@ const RegistrationForm: React.FC<Props> = ( {onFormChange} ) => {
             </span>
           </div>
         </div>
+        <div className='flex flex-col gap-4 max-w-[430px] mt-5 border-2 p-4'>
+          <label className='flex gap-4 w-fit cursor-pointer'>
+            <input type="checkbox" onChange={handleMarketingCheckbox}/>
+            <p className='flex text-sm'>
+            Elfogadom a TwiceTrendy legjobb ajánlatairól, promócióiról és híreiről való információ küldését az e-mail címemre. 
+            </p>
+          </label>
+          <label className='flex gap-4 w-fit cursor-pointer'>
+            <input type="checkbox" onChange={handleGdprCheckbox}/>
+            <p className='flex text-sm'>
+              Elfogadom az Általános Szerződési Feltételeket, és elfogadom az Adatvédelmi irányelveket.
+            </p>
+          </label>
+        </div>
 
         <button 
-          className='p-2 rounded-lg bg-slate-600 text-white mx-auto hover:bg-slate-700'
+          className='p-2 mt-5 rounded-lg bg-slate-600 text-white mx-auto hover:bg-slate-700'
           >
           Regisztráció
         </button>

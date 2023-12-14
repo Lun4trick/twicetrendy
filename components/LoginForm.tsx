@@ -30,6 +30,7 @@ const LoginForm: React.FC<Props> = ( {onFormChange} ) => {
     }
 
     if (res?.ok) {
+      console.log(res)
       router.push('/')
     }
   }

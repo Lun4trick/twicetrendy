@@ -16,11 +16,6 @@ const userSchema = new Schema({
     default: false
   },
 
-  newsletter: {
-    type: Boolean,
-    default: false
-  },
-
   email: {
     type: String,
     required: [true, 'Email is required'],
@@ -39,54 +34,66 @@ const userSchema = new Schema({
 
   consents: {
       terms: {
-        type: Boolean,
-        default: false,
-        acceptedAt: {
+        accepted: {
+          type: Boolean,
+          default: false,
+        },
+        updatedAt: {
           type: Date,
           default: undefined
         },
       },
 
       marketingEmails: {
-        type: Boolean,
-        default: false,
-        acceptedAt: {
+        accepted: {
+          type: Boolean,
+          default: false,
+        },
+        updatedAt: {
           type: Date,
           default: undefined
         },
       },
 
       gdpr: {
-        type: Boolean,
-        default: false,
-        acceptedAt: {
+        accepted: {
+          type: Boolean,
+          default: false,
+        },
+        updatedAt: {
           type: Date,
           default: undefined
         },
       },
 
       marketingCookies: {
-        type: Boolean,
-        default: false,
-        acceptedAt: {
+        accepted: {
+          type: Boolean,
+          default: false,
+        },
+        updatedAt: {
           type: Date,
           default: undefined
         },
       },
 
       esentialCookies: {
-        type: Boolean,
-        default: false,
-        acceptedAt: {
+        accepted: {
+          type: Boolean,
+          default: false,
+        },
+        updatedAt: {
           type: Date,
           default: undefined
         },
       },
 
       analyticsCookies: {
-        type: Boolean,
-        default: false,
-        acceptedAt: {
+        accepted: {
+          type: Boolean,
+          default: false,
+        },
+        updatedAt: {
           type: Date,
           default: undefined
         },
