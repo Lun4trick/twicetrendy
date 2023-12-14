@@ -188,7 +188,7 @@ const RegistrationForm: React.FC<Props> = ( {onFormChange} ) => {
               className='border-2 p-1 rounded-md'
               value={lastName}
               autoComplete='family-name'
-              onChange={(e) => {setFirstName(e.target.value)}}
+              onChange={(e) => {setLastName(e.target.value)}}
             />
           </div>
         </div>
@@ -201,7 +201,7 @@ const RegistrationForm: React.FC<Props> = ( {onFormChange} ) => {
                 className='border-2 p-1 rounded-md'
                 value={firstName}
                 autoComplete='given-name'
-                onChange={(e) => {setLastName(e.target.value)}}
+                onChange={(e) => {setFirstName(e.target.value)}}
               />
             </div>
           </div>
